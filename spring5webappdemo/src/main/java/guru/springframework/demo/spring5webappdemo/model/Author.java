@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +36,8 @@ public @Data class Author {
 	private String firstName;
 	private String lastName;
 
-	@ManyToMany(mappedBy="authors")
+	@ManyToMany
+	@JoinTable(name="author_book", joinColumns=@JoinColumn(name="author_id"), inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> books = new HashSet<>();
 
 	/**
