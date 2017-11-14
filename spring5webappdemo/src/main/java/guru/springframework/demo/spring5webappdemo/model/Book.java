@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,9 +34,11 @@ public @Data class Book {
 	private Long id; // leakage between Relation and OO paradigms
 	private String title;
 	private String isbn;
-	private String publisher;
+	
+	@OneToOne
+	private Publisher publisher;
 
-	@ManyToMany()
+	@ManyToMany
 	@JoinTable(name="author_book", joinColumns=@JoinColumn(name="book_id"), inverseJoinColumns=@JoinColumn(name="author_id"))
 	private Set<Author> authors = new HashSet<>();
 
@@ -45,7 +48,7 @@ public @Data class Book {
 	 * @param isbn
 	 * @param publisher
 	 */
-	public Book(String title, String isbn, String publisher) {
+	public Book(String title, String isbn, Publisher publisher) {
 		this.title = title;
 		this.isbn = isbn;
 		this.publisher = publisher;
